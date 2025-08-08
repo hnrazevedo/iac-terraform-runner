@@ -1,0 +1,17 @@
+---
+pm_api_url: https://proxmox-server:port/api2/json
+pm_auth_user: AAAAAAA
+pm_auth_password: AAAAAAA
+pm_tls_insecure: true
+pm_debug: false
+pm_log_enable: false
+pm_log_file: terraform-proxmox.log
+ssh_key: 
+  - "ssh-rsa AAAAAAA"
+
+bucket:
+  name: tfstate
+  region: main
+  access_key: AAAAAAA
+  secret_key: AAAAAAA
+  s3: https://bucket-server:port/

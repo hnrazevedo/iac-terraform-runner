@@ -1,0 +1,31 @@
+---
+- name: Define random project path
+  ansible.builtin.set_fact:
+    project_path: "/tmp/terraform/{{ lookup('community.general.random_string', length=12, special=false) }}"
+
+- name: Create temp project path
+  ansible.builtin.file:
+    path: "{{ project_path }}"
+    state: directory
+    recurse: yes
+
+- name: Git pull project
+  ansible.builtin.git:
+    repo: "{{ provider.git }}"
+    dest: "{{ project_path }}"
+    version: "{{ provider.version }}"
+
+- name: Run terraform
+  community.general.terraform:
+    project_path: "{{ project_path }}"
+    state: "{{ state }}"
+    complex_vars: true
+    force_init: true
+    backend_config: "{{ backend_config }}"
+    variables: "{{ terraform_variables }}"
+  register: terraform_output
+
+- name: Clear terraform path
+  ansible.builtin.file:
+    state: absent
+    path: "{{ project_path }}"
