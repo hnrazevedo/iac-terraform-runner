@@ -1,4 +1,8 @@
 ---
+- name: Include default vars
+  ansible.builtin.include_vars:
+    file: "{{ role_path }}/vars/main.yml"
+
 - name: Define random project path
   ansible.builtin.set_fact:
     project_path: "/tmp/terraform/{{ lookup('community.general.random_string', length=12, special=false) }}"
